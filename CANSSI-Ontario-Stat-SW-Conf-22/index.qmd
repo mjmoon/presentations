@@ -1148,8 +1148,8 @@ Simonsohn, U., Simmons, J.P. & Nelson, L.D. Specification curve analysis. (2020)
 ::: {}
 +  The package is available on CRAN  (`install.packages("mverse")`) 
 +  Experimental features are available on GitHub (`remotes::install_github("mverseanalysis/mverse", ref = "test")`)
-+  Submit issues at `https://github.com/mverseanalysis/mverse`
-+  Demo codes available at `https://github.com/mjmoon/presentations/tree/main/CANSSI-Ontario-Stat-SW-Conf-22`
++  For those more adventurous, see <code class="accent4">multiverse</code> package by Abhraneel Sarma, Matthew Kay, et al. at `https://mucollective.github.io/multiverse/` on which `mverse` is built
++  Demo codes for the slides available at `https://github.com/mjmoon/presentations/tree/main/CANSSI-Ontario-Stat-SW-Conf-22`
 :::
 
 
