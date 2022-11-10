@@ -1148,6 +1148,7 @@ Simonsohn, U., Simmons, J.P. & Nelson, L.D. Specification curve analysis. (2020)
 (`remotes::install_github("mverseanalysis/mverse", ref = "test")`)
 +  Submit issues at  
 `https://github.com/mverseanalysis/mverse`
++  Demo codes available at `https://github.com/mjmoon/presentations/tree/main/CANSSI-Ontario-Stat-SW-Conf-22`
 :::
 
 ::::
@@ -1155,11 +1156,3 @@ Simonsohn, U., Simmons, J.P. & Nelson, L.D. Specification curve analysis. (2020)
 
 
 
-
-<!-- ### Future plans -->
-
-<!-- Conduct a randomized study with undergraduate students to investigate whether `mverse` helps students  -->
-
-<!-- +  conduct a multiverse analysis accurately -->
-<!-- +  better understand the implications of a multiverse analysis -->
-<!-- +  make the multiverse analysis process a positive experience -->
