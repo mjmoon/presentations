@@ -1,0 +1,1165 @@
+---
+title: "`mverse`: How the R package is designed to help students explore the multiverse"
+subtitle: "CANSSI Ontario Statistical Software Conference"
+author: "Michael Jongho Moon"
+institute: "PhD Student, DoSS, University of Toronto"
+date: "November 10, 2022"
+format:
+  revealjs:
+    width: 1280
+    height: 720
+    theme: [theme.scss, elements.scss]
+    include-in-header: "header.html"
+    auto-stretch: false
+    footer: |
+      &copy; 2022. Michael J. Moon. University of Toronto. 
+      
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+palette(colorspace::qualitative_hcl(5, palette = "Dark 3"))
+# plot(1:5, col = 1:5, cex = 2, pch = 16)
+```
+
+## {}
+
+::::: {.columns}
+:::: { .column width="45%"}
+<h3 class="r-fit-text">Multiverse<br/>analysis</h3>
+::::
+:::: {.column width="10%"}
+::::
+:::: {.fragment .column width="45%"}
+
+<div class="r-fit-text"><h3>Example</h3>Are <b class="accent1">darker-skinned</b><br/>soccer players<br/>more likely<br/>to receive a <b class="accent1">red card</b>?</div>
+::::
+:::::
+
+
+## {}
+
+::: {.fullheight .img-gradient}
+<img src="img/redcardscollect.png" / >
+:::
+
+::::: {.columns}
+:::: {.column width="70%"}
+
+::::
+:::: {.column width="30%"}
+### Data<sup>1</sup>
+
++  Card counts received by 2,053 soccer players who played in the first male
+divisions of England, France, and Spain in the 2012-2013 season throughout their careers
++  Contains skin tone information along with other player information
++  Which attributes are important to take into account as <b class="accent1">covariates</b>?
+
+:::: {.caption}
+<sup>1</sup>Silberzahn, R., Uhlmann, E.L., ..., & Nosek, B.A. (2018). Many Analysts, One Data Set: Making Transparent How Variations in Analytic Choices Affect Results. Advances in Methods and Practices in Psychological Science, 1(3), 337-356. 
+https://doi.org/10.1177/2515245917747646
+::::
+
+::::
+:::::
+
+## {}
+
+### Position
+
+::::: {.columns}
+:::: {.column width="30%"}
+
+#### As-is
+
+<img src="img/position-01.png"/ >
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="30%" .fragment}
+
+#### Fielder vs. goalkeeper
+
+<img src="img/position-02.png" />
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="30%" .fragment}
+
+#### Fielder groups
+
+<img src="img/position-03.png" />
+
+::::
+:::::
+
+## {}
+
+
+::::::: {.columns}
+:::::: {.column width="30%"}
+### Position
+
+Which groupings should we use?
+
+<img src="img/position-comb.png" />
+
+
+::::::
+:::::: {.column width="5%"}
+::::::
+:::::: {.column width="30%"}
+### Size
+
+Should we use height, weight, or both to represent size?
+
+<img src="img/size.png" width="80%" />
+
+::::::
+:::::: {.column width="5%"}
+::::::
+:::::: {.column width="30%"}
+
+### League country
+
+Should we take the league country into account?
+
+<img src="img/countries-decision.png" />
+
+::::::
+:::::::
+
+## {}
+
+:::::: {.columns}
+:::: {.column width="40%"}
+
++  Reporting results from a single analysis doesn't reveal the full scholarship involved in the analysis
+
+::: {.fragment data-fragment-index="0"}
++  <h3 class="accent1">Multiverse analysis<sup>2</sup></h3> 
+involves performing and reporting all analyses across the whole set of reasonable alternatives
+:::
+
+::: {.fragment data-fragment-index="1"}
++  There are at least 29 unique analytic approaches with the same data set<sup>1</sup>
+:::
+::: {.fragment data-fragment-index="1"}
++  A multiverse analysis would consider all reasonable combinations of alternatives for each analytic decision
+:::
+
+::::
+
+:::: {.column width="5%"}
+::::
+
+:::: {.column width="55%"}
+
+<div class="r-stack"><img class="fragment fade-out" data-fragment-index="0" src="img/three-decisions.png" width="75%" style="margin:auto;" /><img class="fragment current-visible" data-fragment-index="0" src="img/three-spidermen-multiverse.png" /><img class="fragment current-visible" data-fragment-index="1" src="img/fivethirtyeight-soccer.webp" /></div>
+
+:::: {.caption}
+::: {.fragment data-fragment-index="0"}
+<sup>2</sup>Steegen, S., Tuerlinckx, F., Gelman, A., & Vanpaemel, W. (2016).  
+Increasing Transparency Through a Multiverse Analysis.  
+Perspectives on Psychological Science, 11(5), 702–712.  
+https://doi.org/10.1177/1745691616658637
+:::
+::: {.fragment data-fragment-index="1"}
+<sup>1</sup>Silberzahn, R., Uhlmann, E.L., ..., & Nosek, B.A. (2018).  
+Many Analysts, One Data Set: Making Transparent How Variations in Analytic Choices Affect Results.  
+Advances in Methods and Practices in Psychological Science, 1(3), 337-356.  
+https://doi.org/10.1177/2515245917747646
+:::
+::: {.fragment data-fragment-index="1"}
+<sup>3</sup>Figure by Richie King, Aug 19, 2015, Science Sin't Broken.  
+FiveThirtyEight. https://fivethirtyeight.com/features/science-isnt-broken/
+:::
+::::
+
+::::
+
+:::::
+
+## {.center}
+
+:::: {.columns}
+::: {.column width="50%"}
+<img src="img/oh-no-spiderman-multiverse.webp" />
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="45%"}
+
+<h3 class="r-fit-text">Exploring a multiverse<br />is <span class="accent2">complex and difficult</span>,<br />especially for students<br /> with limited technical competency</h3>
+
+:::
+::::
+
+
+## {.center}
+
+::::: {.columns}
+:::: {.column width="45%"}
+
+<h3 class="r-fit-text accent3">mverse</h3>
+
+::: {.r-fit-text}
+An R package for tidy multiverse analysis
+:::
+
+::::
+:::: {.column width="10%"}
+::::
+:::: {.column width="45%"}
+
+### Collaborators
+
+[Haoda Li](https://haoda-li.github.io),  
+[Mingwei Xu](https://www.linkedin.com/in/mingwei-xu-107401152/),  
+[Nathan Taback, PhD](https://utstat.toronto.edu/nathan/), &  
+[Fanny Chevalier, PhD](http://fannychevalier.net)
+
+
+### How we approached the design
+
+::: {.r-fit-text}
++  Systematic syntax
++  Familiar syntax
++  Interactive exploration tool
+:::
+
+::::
+:::::
+
+<code>Some of the features presented are in the experimental stage.</code>
+
+
+## Systematic syntax {.scrollable}
+
+### Multiverse definition to execution
+
+::::: {.columnns}
+:::: {.column width="45%"}
+
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="45%"}
+
+#### Without `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+library(tidyverse)
+.
+.
+# data preparation steps
+.
+.
+# create position alternatives
+soccer <- mutate(
+  soccer,
+  # fielder vs goalkeeper
+  position_fld_vs_gk = if_else(position == "Goalkeeper",
+                               "Goalkeeper", "Fielder"),
+  # grouping into 4 groups
+  position_group = forcats::fct_collapse(
+    position,
+    Forward = c("Center Forward", "Right Winger", "Left Winger"),
+    Midfielder = c("Defensive Midfielder", "Attacking Midfielder",
+                   "Right Midfielder", "Center Midfielder", 
+                   "Left Midfielder"),
+    Defender = c("Center Back", "Right Fullback", "Left Fullback"),
+    Goalkeeper = c("Goalkeeper")
+  )
+)
+
+# specify variable inclusion and exclusion
+model_1 <- formula(redCards ~ skintone)
+model_2 <- formula(redCards ~ skintone + position)
+model_3 <- formula(redCards ~ skintone + position_fld_vs_gk)
+model_4 <- formula(redCards ~ skintone + position_group)
+
+model_5 <- formula(redCards ~ skintone + 
+                     weight)
+model_6 <- formula(redCards ~ skintone + position + 
+                     weight)
+model_7 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                     weight)
+model_8 <- formula(redCards ~ skintone + position_group + 
+                     weight)
+
+model_9 <- formula(redCards ~ skintone + 
+                     height)
+model_10 <- formula(redCards ~ skintone + position + 
+                      height)
+model_11 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      height)
+model_12 <- formula(redCards ~ skintone + position_group + 
+                      height)
+
+model_13 <- formula(redCards ~ skintone + weight + 
+                      height)
+model_14 <- formula(redCards ~ skintone + position + 
+                      weight + height)
+model_15 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      weight + height)
+model_16 <- formula(redCards ~ skintone + position_group + 
+                      weight + height)
+
+model_17 <- formula(redCards ~ skintone + 
+                      leagueCountry)
+model_18 <- formula(redCards ~ skintone + position + 
+                      leagueCountry)
+model_19 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      leagueCountry)
+model_20 <- formula(redCards ~ skintone + position_group + 
+                      leagueCountry)
+
+model_21 <- formula(redCards ~ skintone + 
+                      weight + leagueCountry)
+model_22 <- formula(redCards ~ skintone + position + 
+                      weight + leagueCountry)
+model_23 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      weight + leagueCountry)
+model_24 <- formula(redCards ~ skintone + position_group + 
+                      weight + leagueCountry)
+
+model_25 <- formula(redCards ~ skintone + 
+                      height + leagueCountry)
+model_26 <- formula(redCards ~ skintone + position + 
+                      height + leagueCountry)
+model_27 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      height + leagueCountry)
+model_28 <- formula(redCards ~ skintone + position_group + 
+                      height + leagueCountry)
+
+model_29 <- formula(redCards ~ skintone + 
+                      weight + height + leagueCountry)
+model_30 <- formula(redCards ~ skintone + position + 
+                      weight + height + leagueCountry)
+model_31 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      weight + height + leagueCountry)
+model_32 <- formula(redCards ~ skintone + position_group + 
+                      weight + height + leagueCountry)
+
+# bring the multiverse together and fit
+models <- list(
+  model_1, model_2, model_3, model_4,
+  model_5, model_6, model_7, model_8,
+  model_9, model_10, model_11, model_12,
+  model_13, model_14, model_15, model_16,
+  model_17, model_18, model_19, model_20,
+  model_21, model_22, model_23, model_24,
+  model_25, model_26, model_27, model_28,
+  model_29, model_30, model_31, model_32
+)
+multiverse_fit <- lapply(
+  models, glm, family = binomial, data = soccer)
+
+```
+
+::::
+:::::
+
+## Systematic syntax {}
+
+### <span class="accent3">Designed around analytical decision points</span>
+
+::::: {.columnns}
+:::: {.column width="45%"}
+
+#### With `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "8-23"
+library(mverse)
+.
+.
+# data preparation steps
+.
+.
+# create position alternatives
+position_alternative <- mutate_branch(
+  as_is = position, # use position as is
+  # fielder vs goalkeeper
+  position_fld_vs_gk = if_else(position == "Goalkeeper",
+                               "Goalkeeper", "Fielder"),
+  # grouping into 4 groups
+  `Fielder Grouping` = forcats::fct_collapse(
+    position,
+    Forward = c("Center Forward", "Right Winger", "Left Winger"),
+    Midfielder = c("Defensive Midfielder", "Attacking Midfielder",
+                   "Right Midfielder", "Center Midfielder", 
+                   "Left Midfielder"),
+    Defender = c("Center Back", "Right Fullback", "Left Fullback"),
+    Goalkeeper = c("Goalkeeper")
+  )
+)
+
+# create size alternatives
+size <- mutate_branch(height, weight)
+
+# specify variable inclusion and exclusion
+frmls <- formula_branch(
+  `No Covariate` = redCards ~ skintone,
+  `Position` = redCards ~ skintone + position_alternative,
+  `Position + Size` = redCards ~ skintone + position_alternative + size,
+  `Position + Weight + Height` = redCards ~ skintone + position_alternative + weight + height,
+  `Size` = redCards ~ skintone + size,
+  `Weight + Height` = redCards ~ skintone + weight + height,
+  `Country` = redCards ~ skintone + leagueCountry,
+  `Position + Country` = redCards ~ skintone + position_alternative + leagueCountry,
+  `Position + Size + Country` = redCards ~ skintone + position_alternative + size + leagueCountry,
+  `Position + Weight + Height + Country` = redCards ~ skintone + position_alternative + weight + height + leagueCountry,
+  `Size + Country` = redCards ~ skintone + size + leagueCountry,
+  `Weight + Height + Country` = redCards ~ skintone + weight + height + leagueCountry,
+)
+# remove unnecessary branch combinations
+condition_position_1 <- branch_condition(
+  redCards ~ skintone, position)
+condition_position_2 <- branch_condition(
+  redCards ~ skintone + size, position)
+condition_position_3 <- branch_condition(
+  redCards ~ skintone + size + leagueCountry, position)
+condition_position_4 <- branch_condition(
+  redCards ~ skintone + leagueCountry, position)
+condition_position_5 <- branch_condition(
+  redCards ~ skintone + weight + height, position)
+condition_position_6 <- branch_condition(
+  redCards ~ skintone + weight + height + leagueCountry, position)
+
+# bring the multiverse together and fit
+mv <- mverse(soccer) %>%
+  add_mutate_branch(position_alternative, size) %>%
+  add_formula_branch(frmls) %>%
+  add_family_branch(
+    family_branch(logistic = binomial, name = "fam")
+  ) %>%
+  add_branch_condition(
+    condition_position_1, condition_position_2, condition_position_3,
+    condition_position_4, condition_position_5, condition_position_6
+  )
+glm_mverse(mv)
+
+```
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="30%"}
+
+
+<img src="img/position-comb.png" />
+
+
+::::
+:::::
+
+
+## Systematic syntax {.scrollable}
+
+### <span class="accent3">Requires a fewer lines of codes</span>
+
+::::: {.columnns}
+:::: {.column width="45%"}
+
+#### With `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "4-31"
+.
+.
+.
+# specify variable inclusion and exclusion
+frmls <- formula_branch(
+  `No Covariate` = redCards ~ skintone,
+  `Position` = redCards ~ skintone + position_alternative,
+  `Position + Size` = redCards ~ skintone + position_alternative + size,
+  `Position + Weight + Height` = redCards ~ skintone + position_alternative + weight + height,
+  `Size` = redCards ~ skintone + size,
+  `Weight + Height` = redCards ~ skintone + weight + height,
+  `Country` = redCards ~ skintone + leagueCountry,
+  `Position + Country` = redCards ~ skintone + position_alternative + leagueCountry,
+  `Position + Size + Country` = redCards ~ skintone + position_alternative + size + leagueCountry,
+  `Position + Weight + Height + Country` = redCards ~ skintone + position_alternative + weight + height + leagueCountry,
+  `Size + Country` = redCards ~ skintone + size + leagueCountry,
+  `Weight + Height + Country` = redCards ~ skintone + weight + height + leagueCountry,
+)
+# remove unnecessary branch combinations
+condition_position_1 <- branch_condition(
+  redCards ~ skintone, position)
+condition_position_2 <- branch_condition(
+  redCards ~ skintone + size, position)
+condition_position_3 <- branch_condition(
+  redCards ~ skintone + size + leagueCountry, position)
+condition_position_4 <- branch_condition(
+  redCards ~ skintone + leagueCountry, position)
+condition_position_5 <- branch_condition(
+  redCards ~ skintone + weight + height, position)
+condition_position_6 <- branch_condition(
+  redCards ~ skintone + weight + height + leagueCountry, position)
+
+# bring the multiverse together and fit
+mv <- mverse(soccer) %>%
+  add_mutate_branch(position_alternative, size) %>%
+  add_formula_branch(frmls) %>%
+  add_family_branch(
+    family_branch(logistic = binomial, name = "fam")
+  ) %>%
+  add_branch_condition(
+    condition_position_1, condition_position_2, condition_position_3,
+    condition_position_4, condition_position_5, condition_position_6
+  )
+glm_mverse(mv)
+
+```
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="45%"}
+
+#### Without `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "4-72"
+.
+.
+.
+# specify variable inclusion and exclusion
+model_1 <- formula(redCards ~ skintone)
+model_2 <- formula(redCards ~ skintone + position)
+model_3 <- formula(redCards ~ skintone + position_fld_vs_gk)
+model_4 <- formula(redCards ~ skintone + position_group)
+
+model_5 <- formula(redCards ~ skintone + 
+                     weight)
+model_6 <- formula(redCards ~ skintone + position + 
+                     weight)
+model_7 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                     weight)
+model_8 <- formula(redCards ~ skintone + position_group + 
+                     weight)
+
+model_9 <- formula(redCards ~ skintone + 
+                     height)
+model_10 <- formula(redCards ~ skintone + position + 
+                      height)
+model_11 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      height)
+model_12 <- formula(redCards ~ skintone + position_group + 
+                      height)
+
+model_13 <- formula(redCards ~ skintone + weight + 
+                      height)
+model_14 <- formula(redCards ~ skintone + position + 
+                      weight + height)
+model_15 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      weight + height)
+model_16 <- formula(redCards ~ skintone + position_group + 
+                      weight + height)
+
+model_17 <- formula(redCards ~ skintone + 
+                      leagueCountry)
+model_18 <- formula(redCards ~ skintone + position + 
+                      leagueCountry)
+model_19 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      leagueCountry)
+model_20 <- formula(redCards ~ skintone + position_group + 
+                      leagueCountry)
+
+model_21 <- formula(redCards ~ skintone + 
+                      weight + leagueCountry)
+model_22 <- formula(redCards ~ skintone + position + 
+                      weight + leagueCountry)
+model_23 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      weight + leagueCountry)
+model_24 <- formula(redCards ~ skintone + position_group + 
+                      weight + leagueCountry)
+
+model_25 <- formula(redCards ~ skintone + 
+                      height + leagueCountry)
+model_26 <- formula(redCards ~ skintone + position + 
+                      height + leagueCountry)
+model_27 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      height + leagueCountry)
+model_28 <- formula(redCards ~ skintone + position_group + 
+                      height + leagueCountry)
+
+model_29 <- formula(redCards ~ skintone + 
+                      weight + height + leagueCountry)
+model_30 <- formula(redCards ~ skintone + position + 
+                      weight + height + leagueCountry)
+model_31 <- formula(redCards ~ skintone + position_fld_vs_gk + 
+                      weight + height + leagueCountry)
+model_32 <- formula(redCards ~ skintone + position_group + 
+                      weight + height + leagueCountry)
+
+# bring the multiverse together and fit
+models <- list(
+  model_1, model_2, model_3, model_4,
+  model_5, model_6, model_7, model_8,
+  model_9, model_10, model_11, model_12,
+  model_13, model_14, model_15, model_16,
+  model_17, model_18, model_19, model_20,
+  model_21, model_22, model_23, model_24,
+  model_25, model_26, model_27, model_28,
+  model_29, model_30, model_31, model_32
+)
+multiverse_fit <- lapply(
+  models, glm, family = binomial(), data = soccer)
+
+```
+
+::::
+:::::
+
+## Systematic syntax {.scrollable}
+
+### <span class="accent3">Automates multiplexing</span>
+
+::::: {.columnns}
+:::: {.column width="45%"}
+
+#### With `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+#| #| code-line-numbers: "4-18"
+.
+.
+.
+# bring the multiverse together and fit
+mv <- mverse(soccer) %>%
+  add_mutate_branch(position_alternative, size) %>%
+  add_formula_branch(frmls) %>%
+  add_family_branch(
+    family_branch(logistic = binomial, name = "fam")
+  ) %>%
+  add_branch_condition(
+    condition_position_1, condition_position_2, 
+    condition_position_3, condition_position_4, 
+    condition_position_5, condition_position_6
+  )
+glm_mverse(mv)
+
+```
+
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="45%"}
+
+#### Without `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "4-16"
+.
+.
+.
+# bring the multiverse together and fit
+models <- list(
+  model_1, model_2, model_3, model_4,
+  model_5, model_6, model_7, model_8,
+  model_9, model_10, model_11, model_12,
+  model_13, model_14, model_15, model_16,
+  model_17, model_18, model_19, model_20,
+  model_21, model_22, model_23, model_24,
+  model_25, model_26, model_27, model_28,
+  model_29, model_30, model_31, model_32
+)
+multiverse_fit <- lapply(
+  models, glm, family = binomial, data = soccer)
+
+```
+
+::::
+:::::
+
+## Systematic syntax 
+
+::::: {.columnns}
+:::: {.column width="45%"}
+
+```{r}
+#| eval: false
+#| echo: true
+library(mverse)
+.
+.
+# data preparation steps
+.
+.
+# create position alternatives
+position_alternative <- mutate_branch(
+  as_is = position, # use position as is
+  # fielder vs goalkeeper
+  position_fld_vs_gk = if_else(position == "Goalkeeper",
+                               "Goalkeeper", "Fielder"),
+  # grouping into 4 groups
+  `Fielder Grouping` = forcats::fct_collapse(
+    position,
+    Forward = c("Center Forward", "Right Winger", "Left Winger"),
+    Midfielder = c("Defensive Midfielder", "Attacking Midfielder",
+                   "Right Midfielder", "Center Midfielder", 
+                   "Left Midfielder"),
+    Defender = c("Center Back", "Right Fullback", "Left Fullback"),
+    Goalkeeper = c("Goalkeeper")
+  )
+)
+
+# create size alternatives
+size <- mutate_branch(height, weight)
+
+# specify variable inclusion and exclusion
+frmls <- formula_branch(
+  `No Covariate` = redCards ~ skintone,
+  `Position` = redCards ~ skintone + position_alternative,
+  `Position + Size` = redCards ~ skintone + position_alternative + size,
+  `Position + Weight + Height` = redCards ~ skintone + position_alternative + weight + height,
+  `Size` = redCards ~ skintone + size,
+  `Weight + Height` = redCards ~ skintone + weight + height,
+  `Country` = redCards ~ skintone + leagueCountry,
+  `Position + Country` = redCards ~ skintone + position_alternative + leagueCountry,
+  `Position + Size + Country` = redCards ~ skintone + position_alternative + size + leagueCountry,
+  `Position + Weight + Height + Country` = redCards ~ skintone + position_alternative + weight + height + leagueCountry,
+  `Size + Country` = redCards ~ skintone + size + leagueCountry,
+  `Weight + Height + Country` = redCards ~ skintone + weight + height + leagueCountry,
+)
+# remove unnecessary branch combinations
+condition_position_1 <- branch_condition(
+  redCards ~ skintone, position)
+condition_position_2 <- branch_condition(
+  redCards ~ skintone + size, position)
+condition_position_3 <- branch_condition(
+  redCards ~ skintone + size + leagueCountry, position)
+condition_position_4 <- branch_condition(
+  redCards ~ skintone + leagueCountry, position)
+condition_position_5 <- branch_condition(
+  redCards ~ skintone + weight + height, position)
+condition_position_6 <- branch_condition(
+  redCards ~ skintone + weight + height + leagueCountry, position)
+
+# bring the multiverse together and fit
+mv <- mverse(soccer) %>%
+  add_mutate_branch(position_alternative, size) %>%
+  add_formula_branch(frmls) %>%
+  add_family_branch(
+    family_branch(logistic = binomial, name = "fam")
+  ) %>%
+  add_branch_condition(
+    condition_position_1, condition_position_2, condition_position_3,
+    condition_position_4, condition_position_5, condition_position_6
+  )
+glm_mverse(mv)
+
+```
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="45%"}
+
+<h3 class="r-fit-text accent1">Less prone to errors</h3>
+<h3 class="r-fit-text">compared to copy-and-paste approach</h3>
+
+::::
+
+:::::
+
+
+## Familiar syntax {.scrollable}
+
+### Defining alternative options for a variable
+
+::::: {.columnns}
+:::: {.column width="45%"}
+
+#### With `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+# create position alternatives
+position_alternative <- mutate_branch(
+  as_is = position, # use position as is
+  # fielder vs goalkeeper
+  position_fld_vs_gk = if_else(position == "Goalkeeper",
+                               "Goalkeeper", "Fielder"),
+  # grouping into 4 groups
+  `Fielder Grouping` = forcats::fct_collapse(
+    position,
+    Forward = c("Center Forward", "Right Winger", "Left Winger"),
+    Midfielder = c("Defensive Midfielder", "Attacking Midfielder",
+                   "Right Midfielder", "Center Midfielder", 
+                   "Left Midfielder"),
+    Defender = c("Center Back", "Right Fullback", "Left Fullback"),
+    Goalkeeper = c("Goalkeeper")
+  )
+)
+
+# create size alternatives
+size <- mutate_branch(height, weight)
+
+```
+
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="45%"}
+
+#### Without `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+# create position alternatives
+soccer <- mutate(
+  soccer,
+  # fielder vs goalkeeper
+  position_fld_vs_gk = if_else(position == "Goalkeeper",
+                               "Goalkeeper", "Fielder"),
+  # grouping into 4 groups
+  position_group = forcats::fct_collapse(
+    position,
+    Forward = c("Center Forward", "Right Winger", "Left Winger"),
+    Midfielder = c("Defensive Midfielder", "Attacking Midfielder",
+                   "Right Midfielder", "Center Midfielder", "Left Midfielder"),
+    Defender = c("Center Back", "Right Fullback", "Left Fullback"),
+    Goalkeeper = c("Goalkeeper")
+  )
+)
+
+```
+::::
+:::::
+
+## Familiar syntax {.scrollable}
+
+### <span class="accent3">Uses `dplyr` grammar</span>
+
+::::: {.columnns}
+:::: {.column width="45%"}
+
+#### With `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "1-2,4,5,8,19-20"
+# create position alternatives
+position_alternative <- mutate_branch(
+  as_is = position, # use position as is
+  # fielder vs goalkeeper
+  position_fld_vs_gk = if_else(position == "Goalkeeper",
+                               "Goalkeeper", "Fielder"),
+  # grouping into 4 groups
+  `Fielder Grouping` = forcats::fct_collapse(
+    position,
+    Forward = c("Center Forward", "Right Winger", "Left Winger"),
+    Midfielder = c("Defensive Midfielder", "Attacking Midfielder",
+                   "Right Midfielder", "Center Midfielder", 
+                   "Left Midfielder"),
+    Defender = c("Center Back", "Right Fullback", "Left Fullback"),
+    Goalkeeper = c("Goalkeeper")
+  )
+)
+
+# create size alternatives
+size <- mutate_branch(height, weight)
+
+```
+
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="45%"}
+
+#### Without `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "1-2,5,6"
+# create position alternatives
+soccer <- mutate(
+  soccer,
+  # fielder vs goalkeeper
+  position_fld_vs_gk = if_else(position == "Goalkeeper",
+                               "Goalkeeper", "Fielder"),
+  # grouping into 4 groups
+  position_group = forcats::fct_collapse(
+    position,
+    Forward = c("Center Forward", "Right Winger", "Left Winger"),
+    Midfielder = c("Defensive Midfielder", "Attacking Midfielder",
+                   "Right Midfielder", "Center Midfielder", "Left Midfielder"),
+    Defender = c("Center Back", "Right Fullback", "Left Fullback"),
+    Goalkeeper = c("Goalkeeper")
+  )
+)
+
+```
+::::
+:::::
+
+## Familiar syntax {.scrollable}
+
+### <span class="accent3">Uses `dplyr` grammar</span>
+
+::::: {.columnns}
+:::: {.column width="45%"}
+
+#### With `mverse`
+
+```{r}
+#| eval: false
+#| echo: true
+# create position alternatives
+position_alternative <- mutate_branch(
+  as_is = position, # use position as is
+  # fielder vs goalkeeper
+  position_fld_vs_gk = if_else(position == "Goalkeeper",
+                               "Goalkeeper", "Fielder"),
+  # grouping into 4 groups
+  `Fielder Grouping` = forcats::fct_collapse(
+    position,
+    Forward = c("Center Forward", "Right Winger", "Left Winger"),
+    Midfielder = c("Defensive Midfielder", "Attacking Midfielder",
+                   "Right Midfielder", "Center Midfielder", 
+                   "Left Midfielder"),
+    Defender = c("Center Back", "Right Fullback", "Left Fullback"),
+    Goalkeeper = c("Goalkeeper")
+  )
+)
+
+# create size alternatives
+size <- mutate_branch(height, weight)
+
+```
+
+
+::::
+:::: {.column width="5%"}
+::::
+:::: {.column width="45%"}
+
+<h3 class="r-fit-text accent1">Less to learn</h3>
+<h3 class="r-fit-text">for those learning R and `tidyverse`</h3>
+
+
+::::
+:::::
+
+
+
+## Interactive exploration tool
+
+
+:::::: {.columns}
+::::: {.column width="20%"}
+
+###  extract()
+###  multiverse_tree()
+###  spec_curve()
+
+:::::
+::::::
+
+
+## Interactive exploration tool
+
+
+:::::: {.columns}
+::::: {.column width="20%"}
+
+###  `extract()`
+####  multiverse_tree()
+####  spec_curve()
+
+:::::
+::::: {.column width="5%"}
+:::::
+::::: {.column width="70%"}
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "1-5"
+extract(
+  mv, 
+  columns = c("universe", "skintone", "position_alternative", 
+              "redCards_raw", "games")
+) %>%
+  group_by(universe, skintone, position_alternative) %>%
+  summarise(redCards_prop = sum(redCards_raw) / sum(games))
+```
+
+
+
+:::::
+::::::
+
+## Interactive exploration tool
+
+
+:::::: {.columns}
+::::: {.column width="20%"}
+
+###  `extract()`
+####  multiverse_tree()
+####  spec_curve()
+
+:::::
+::::: {.column width="5%"}
+:::::
+::::: {.column width="70%"}
+
+```{r}
+#| echo: true
+#| eval: false
+extract(
+  mv, 
+  columns = c("universe", "skintone", "position_alternative", 
+              "redCards_raw", "games")
+) %>%
+  group_by(universe, skintone, position_alternative) %>%
+  summarise(redCards_prop = sum(redCards_raw) / sum(games))
+```
+
+---
+
+
+```{r}
+#| echo: false
+#| eval: true
+read_csv("extract.csv") |>
+  group_by(universe, skintone, position_alternative) |>
+  summarise(redCards_prop = sum(redCards_raw) / sum(games)) |>
+  print(n = 1000)
+```
+
+:::::
+::::::
+
+## Interactive exploration tool {.scrollable}
+
+
+:::::: {.columns}
+::::: {.column width="20%"}
+
+####  extract()
+###  `multiverse_tree()`
+####  spec_curve()
+
+:::::
+::::: {.column width="5%"}
+:::::
+::::: {.column width="70%"}
+
+```{r}
+#| echo: true
+#| eval: false
+multiverse_tree(
+  mv, branches = c("frmls", "position_alternative"),
+  label = "name", label_size = 4
+  ) +
+  ggraph::scale_edge_colour_brewer(
+    palette = "Dark2", labels = c("Model", "Position"))
+```
+
+<img src="img/multiverse_tree.png" / >
+
+
+:::::
+::::::
+
+## Interactive exploration tool {.scrollable}
+
+
+:::::: {.columns}
+::::: {.column width="20%"}
+
+####  extract()
+####  multiverse_tree()
+###  `spec_curve()`
+
+:::::
+::::: {.column width="5%"}
+:::::
+::::: {.column width="70%"}
+
+```{r}
+#| echo: true
+#| eval: false
+spec_curve(mv, "skintone", branch_order = frmls_branch)
+```
+
+
+<img src="img/spec_curve.png" / >
+
+:::: {.caption}
+Design adopted from 
+Simonsohn, U., Simmons, J.P. & Nelson, L.D. Specification curve analysis. (2020). Nature Human Behaviour, 4, 1208–1214. https://doi.org/10.1038/s41562-020-0912-z
+::::
+
+:::::
+::::::
+
+
+## {.center}
+
+::::: {.columns}
+:::: {.column width="45%"}
+
+<h3 class="r-fit-text">Thank you</h3>
+
+::::
+:::: {.column width="10%"}
+::::
+:::: { .column width="45%"}
+
+<a href="https://cran.r-project.org/package=mverse"><img src="https://cranlogs.r-pkg.org/badges/mverse" /></a>
+
+::: {.r-fit-text}
++  The package is available on CRAN  
+(`install.packages("mverse")`) 
++  Experimental features are available on GitHub  
+(`remotes::install_github("mverseanalysis/mverse", ref = "test")`)
++  Submit issues at  
+`https://github.com/mverseanalysis/mverse`
+:::
+
+::::
+:::::
+
+
+
+
+<!-- ### Future plans -->
+
+<!-- Conduct a randomized study with undergraduate students to investigate whether `mverse` helps students  -->
+
+<!-- +  conduct a multiverse analysis accurately -->
+<!-- +  better understand the implications of a multiverse analysis -->
+<!-- +  make the multiverse analysis process a positive experience -->
