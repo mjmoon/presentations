@@ -1,0 +1,211 @@
+/* fonts */
+@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic);
+.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+/* open app */
+.open-app {
+  background-image: url('interactive-module.png');
+  background-size: cover;
+  height: 100vh;
+}
+/* theme */
+body {
+  font-family: 'Open Sans';
+  font-weight: 300;
+  font-style: normal;
+  color: #696969;
+}
+
+h1, h2, h3 {
+  font-family: sansationbold;
+  font-weight: normal;
+  font-style: normal;
+  color: #808080;
+}
+
+.remark-slide-content h1 { font-size: 2em; }
+.remark-slide-content h2 { font-size: 1.2em; }
+.remark-slide-content h3 { font-size: 1em; }
+
+/* title slide */
+/*
+.title-slide {
+  background-size: cover;
+  background-blend-mode: lighten;
+  background-image:
+    url('titlebg.jpg'),
+    linear-gradient(white, white);
+}
+*/
+.title-slide h1 {
+  font-size: 72px;
+  margin-block-end: 0em;
+  color: black;
+}
+.title-slide h2 {
+  font-size: 36px;
+  font-family: 'sansationbold_italic';
+  margin-bottom: 50px;
+  margin-block-start: 0.5em;
+  color: black;
+}
+.title-slide h3 {
+  font-size: 20px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+/* layouts */
+.remark-slide-content {
+  padding: 40px;
+}
+.nav-left {
+  float: left;
+  padding-right: 15px;
+  width: 25%;
+}
+.nav-right {
+  float: right;
+  padding-left: 15px;
+  width: 25%;
+}
+.main-right {
+  padding-top: 50px;
+  float: left;
+  width: 73%;
+}
+.full .main-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30%;
+  padding: 0;
+}
+.two-third {
+  float: left;
+  width: 73%;
+}
+.selected {
+  color: black;
+}
+.small {
+  font-size: 0.8em;
+}
+.tiny {
+  font-size: 12px;
+  line-height: 12px;
+}
+.hidden {
+  color: #e9e9e9;
+}
+.footnote {
+  font-family: 'sansation_lightregular';
+  text-align: right;
+  position: absolute;
+  bottom: 1em;
+  right: 2em;
+  left: 40%;
+  font-size: 0.5em;
+}
+.footnote p {
+  margin: 0;
+}
+.third {
+  float: left;
+  padding-right: 1%;
+  width: 32%;
+}
+.half {
+  float: left;
+  padding-right: 1%;
+  width: 49%;
+}
+
+.remark-slide-number {
+  font-size: 0.9em;
+  left: 20px;
+  right: none;
+}
+pre {
+  max-height: 600px;
+  overflow-y: auto;
+}
+/* colours */
+.dark {
+  background-color: black;
+  color: #E8E8E8;
+}
+.dark .selected { color: white; }
+.accent1 { color: #1b9e77; }
+.accent2 { color: #d95f02; }
+.accent3 { color: #7570b3; }
+
+/* timline */
+.timeline {
+  position: relative;
+}
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 3px;
+  background-color: #696969;
+  top: 0;
+  bottom: 0;
+  left: 13px;
+}
+.item {
+  position: relative;
+  left: 30px;
+  width: 90%;
+  line-height: 1.1em;
+  padding-right: 5px;
+  margin-bottom: 20px;
+}
+.item h3 {
+  margin: 0;
+  padding: 12px 0;
+}
+.item p {
+  margin: 0;
+  padding-bottom: 10px;
+  padding-left: 15px;
+}
+.item p::before {
+  content: ">";
+  font-weight: 700;
+  position: absolute;
+  left: -2px;
+}
+.item::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: -22px;
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid #696969;
+  z-index: 9999;
+}
+.item.past {
+  color: #929292;
+}
+.item.past::after {
+  background-color: #696969;
+}
+.dark .timeline::after {
+  background-color: white;
+}
+.dark .item h3{
+  color: white;
+}
+.dark .item::after {
+  border-color: white;
+  background-color: #696969;
+}
+.dark .item.past::after {
+  border-color: #696969;
+}
+.dark a {
+  color: #d95f02;
+}
